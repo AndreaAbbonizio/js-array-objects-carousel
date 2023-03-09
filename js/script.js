@@ -35,6 +35,13 @@ const bottomArrowElement = document.getElementById("bottom-arrow");
 const activeImgElement = document.getElementById("carousel-img");
 const asideContainerElement = document.getElementById("aside-container");
 
+const startAutoplayButton = document.getElementById("start-autoplay");
+
+const stopAutoplayButton = document.getElementById("stop-autoplay");
+
+
+const invertAutoplayButton = document.getElementById("invert-autoplay");
+
 
 
 images.forEach(element => {
@@ -76,8 +83,6 @@ textElement.innerHTML = images[index].text;
 textImageContainerEl.append(textElement);
 console.log(textElement);
 
-
-setInterval(changeImage, 4000);
 
 
 
@@ -146,11 +151,36 @@ bottomArrowElement.addEventListener("click", function () {
     textImageContainerEl.append(textElement);
     console.log(textElement);
 
-    console.log(index)
+    console.log(index);
   
    
 
 });
+
+let autoplay;
+
+let invert;
+
+startAutoplayButton.addEventListener("click", function() {
+    autoplay = setInterval(changeImage , 3000);
+})
+
+
+stopAutoplayButton.addEventListener("click" , function() {
+    clearInterval(autoplay);
+    clearInterval(invert);
+})
+
+
+
+invertAutoplayButton.addEventListener("click", function(){
+    invert = setInterval(invertImage, 3000);
+})
+
+
+
+
+
 
 
 
@@ -188,3 +218,32 @@ function changeImage(){
     console.log(index);
 
 };
+
+
+function invertImage(){
+    imageAsideElements[index].classList.remove("active");
+
+
+    if(index == 0){
+        index = images.length - 1;
+    }else{
+        index--;
+    }
+
+    
+
+    imageAsideElements[index].classList.add("active");    
+    
+    activeImgElement.src = images[index].image;
+  
+    titleElement.innerHTML = images[index].title;
+    textImageContainerEl.append(titleElement);
+    console.log(titleElement);
+
+
+    textElement.innerHTML = images[index].text;
+    textImageContainerEl.append(textElement);
+    console.log(textElement);
+
+    console.log(index);
+}
